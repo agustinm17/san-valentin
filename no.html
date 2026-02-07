@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>El Retumbar</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-y: auto;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    img {
+      width: 90vw;
+      max-width: 900px;
+      height: auto;
+      animation: zoom 6s ease-in-out infinite alternate;
+      box-shadow: 0 0 40px red;
+    }
+
+    @keyframes zoom {
+      from { transform: scale(1); }
+      to   { transform: scale(1.1); }
+    }
+
+    .texto {
+      color: white;
+      margin-top: 20px;
+      font-size: 22px;
+      padding: 0 20px;
+    }
+
+    .volver {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: crimson;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio id="bg-music" loop>
+    <source src="audio/rumbling.mp3" type="audio/mpeg">
+  </audio>
+
+  <img src="img/eren.gif" alt="El Retumbar">
+
+  <div class="texto">
+    Elegiste mal… ahora el Retumbar ha comenzado 💀
+  </div>
+
+  <button class="volver" onclick="window.location.href='aceptar.html'">
+    SEGUNDA OPORTUNIDAD 🪄
+  </button>
+
+  <script>
+    const music = document.getElementById("bg-music");
+
+    if (sessionStorage.getItem("playMusic") === "true") {
+      music.play().catch(() => {});
+      sessionStorage.removeItem("playMusic");
+    }
+  </script>
+
+</body>
+</html>
+
+

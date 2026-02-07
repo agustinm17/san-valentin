@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Las actividades del día</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom right, #ffe0ec, #ffffff);
+      font-family: 'Roboto serif', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow: auto;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .contenedor {
+      max-width: 700px;
+      z-index: 1;
+    }
+
+    h1 {
+      color: #d63384;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.3rem;
+      color: #444;
+      margin-bottom: 25px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 2px solid #ff4d6d;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff4d6d;
+      color: white;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="frases"></canvas>
+
+  <div class="contenedor">
+    <h1>Esto aún no acaba! 🤩</h1>
+
+    <p>
+      <strong>¿Estás lista para las actividades o…?</strong>
+    </p>
+
+    <input type="text" id="respuesta" placeholder="Escribe aquí la frase ... 👀">
+
+    <button id="continuar" onclick="window.location.href='golf.html'">
+      Perfecto 💯
+    </button>
+  </div>
+
+<script>
+  const input = document.getElementById("respuesta");
+  const boton = document.getElementById("continuar");
+
+  function normalizar(texto) {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
+
+  input.addEventListener("input", () => {
+    if (normalizar(input.value) === "no puedo marta") {
+      boton.style.display = "inline-block";
+    } else {
+      boton.style.display = "none";
+    }
+  });
+
+  const canvas = document.getElementById("frases");
+  const ctx = canvas.getContext("2d");
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const frases = [];
+
+  for (let i = 0; i < 35; i++) {
+    frases.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: 16 + Math.random() * 12,
+      speed: 0.6 + Math.random() * 1.2
+    });
+  }
+
+  function drawFrase(f) {
+    ctx.font = `${f.size}px Arial`;
+    ctx.fillStyle = "rgba(214, 51, 132, 0.25)";
+    ctx.fillText("¿puedes o no puedes?", f.x, f.y);
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    frases.forEach(f => {
+      drawFrase(f);
+      f.y += f.speed;
+
+      if (f.y > canvas.height + 40) {
+        f.y = -20;
+        f.x = Math.random() * canvas.width;
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>

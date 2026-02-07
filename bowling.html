@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bowling 🎳</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    img {
+      width: 500px;
+      max-width: 90%;
+      z-index: 1;
+    }
+
+    .flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .vibrar {
+      animation: vibracion 0.4s ease;
+    }
+
+    @keyframes vibracion {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-10px, 5px); }
+      40% { transform: translate(10px, -5px); }
+      60% { transform: translate(-10px, 5px); }
+      80% { transform: translate(10px, -5px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .flecha-siguiente {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="pinos"></canvas>
+
+  <button class="flecha-siguiente" onclick="window.location.href='fin.html'">
+    →
+  </button>
+
+  <img src="img/bowling.jpg" alt="Bowling">
+
+  <div class="flash" id="flash"></div>
+
+  <audio id="strikeSound">
+    <source src="audio/strike.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+  const canvas = document.getElementById("pinos");
+  const ctx = canvas.getContext("2d");
+  const flash = document.getElementById("flash");
+  const strikeSound = document.getElementById("strikeSound");
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const pinos = [];
+
+  for (let i = 0; i < 30; i++) {
+    pinos.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: 30 + Math.random() * 30,
+      speedY: 0, // velocidad vertical inicial
+      gravity: 0.08 + Math.random() * 0.05, // aceleración
+      speedX: (Math.random() - 0.5) * 0.5, // leve movimiento lateral
+      rotation: Math.random() * 360,
+      rotationSpeed: (Math.random() - 0.5) * 2 // rotación más natural
+    });
+  }
+
+  function drawPino(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation * Math.PI / 180);
+    ctx.font = `${p.size}px serif`;
+    ctx.fillText("🎳", 0, 0);
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pinos.forEach(p => {
+
+      // Aplicamos gravedad (caída más fluida)
+      p.speedY += p.gravity;
+      p.y += p.speedY;
+      p.x += p.speedX;
+
+      p.rotation += p.rotationSpeed;
+
+      drawPino(p);
+
+      // Reset cuando salen de pantalla
+      if (p.y > canvas.height + 100) {
+        p.y = -50;
+        p.x = Math.random() * canvas.width;
+        p.speedY = 0;
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  window.addEventListener("load", () => {
+    strikeSound.play();
+
+    flash.style.opacity = "1";
+    setTimeout(() => {
+      flash.style.opacity = "0";
+    }, 150);
+
+    document.body.classList.add("vibrar");
+    setTimeout(() => {
+      document.body.classList.remove("vibrar");
+    }, 400);
+  });
+</script>
+
+
+</body>
+</html>

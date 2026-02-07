@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cafetería Lover ☕</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffccd5;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: auto;
+    }
+
+    /* Flecha volver */
+    .flecha-volver {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      background-color: rgba(220, 20, 60, 0.85);
+      color: white;
+      z-index: 1000;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .flecha-volver:hover {
+      background-color: crimson;
+      transform: scale(1.1);
+    }
+
+    .contenido {
+      margin-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      z-index: 2;
+    }
+
+    video {
+      width: 50vw;
+      max-width: 420px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+    }
+
+    .texto {
+      margin-top: 20px;
+      font-size: 22px;
+      max-width: 700px;
+      padding: 0 20px;
+      color: #ff4d8d;
+    }
+
+    .botones {
+      margin: 40px 0;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .boton {
+      padding: 14px 26px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .actividades {
+      background-color:  #ff4d6d;
+    }
+
+    .actividades:hover {
+      background-color: hotpink;
+      transform: scale(1.05);
+    }
+
+    /* CORAZONES */
+    .corazon {
+      position: fixed;
+      font-size: 20px;
+      animation: flotar linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: translateY(100vh) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.4) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Flecha volver -->
+  <button class="flecha-volver" onclick="window.location.href='opciones-desayuno.html'">
+    ←
+  </button>
+
+  <!-- Audio -->
+  <audio autoplay loop>
+    <source src="audio/remix.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="contenido">
+    <!-- Video -->
+    <video autoplay loop muted>
+      <source src="video/cafe_lover.mp4" type="video/mp4">
+    </video>
+
+    <!-- Texto -->
+    <div class="texto">
+      Cafetería Lover ☕💘  
+      <br><br>
+      Este es el fucking Remix
+      como aquella vez el año pasado: cafecito, risas  
+      y bizcochitos 🥐
+    </div>
+
+    <!-- Botón actividades -->
+    <div class="botones">
+      <button class="boton actividades" onclick="window.location.href='actividades.html'">
+        A continuación 🎬
+      </button>
+    </div>
+  </div>
+
+<script>
+  function crearCorazon() {
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "💗";
+
+    const size = Math.random() * 20 + 14;
+    corazon.style.fontSize = size + "px";
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.animationDuration = (Math.random() * 6 + 6) + "s";
+
+    document.body.appendChild(corazon);
+
+    setTimeout(() => {
+      corazon.remove();
+    }, 12000);
+  }
+
+  setInterval(crearCorazon, 350);
+</script>
+
+</body>
+</html>
+

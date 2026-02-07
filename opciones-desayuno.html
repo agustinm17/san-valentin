@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Opciones de Desayuno</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #fff0f5, #ffffff);
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    h1 {
+      color: #d63384;
+      margin-bottom: 30px;
+      font-size: 2.2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 12px;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .card h2 {
+      margin: 15px 0 10px;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .boton {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #ff4d6d;
+      color: white;
+      font-size: 15px;
+    }
+
+    .volver {
+      margin-top: 40px;
+      display: inline-block;
+      font-size: 14px;
+      color: #777;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio autoplay loop>
+    <source src="audio/kahoot.mp3" type="audio/mpeg">
+  </audio>
+
+  <h1>Elige nuestro desayuno perfecto 💖</h1>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="img/lover.jpg" alt="Cafetería Lover">
+      <h2>Cafetería Lover ☕</h2>
+      <button class="boton" onclick="window.location.href='lover.html'">
+        Lover ❤️‍🔥
+      </button>
+    </div>
+
+    <div class="card">
+      <img src="img/kali.jpg" alt="Kali and Dipsy’s">
+      <h2>Kali & Dipsy’s 🥞</h2>
+      <button class="boton" onclick="window.location.href='kali.html'">
+        Hot Cakes 🥞
+      </button>
+    </div>
+
+    <div class="card">
+      <img src="img/sicily.jpg" alt="Sicily">
+      <h2>Sicily 🍰</h2>
+      <button class="boton" onclick="window.location.href='sicily.html'">
+        French Toast 🍞🍯
+      </button>
+    </div>
+
+    <div class="card">
+      <img src="img/johnny.jpg" alt="Johnny Rockets">
+      <h2>Johnny Rockets 🍔</h2>
+      <button class="boton" onclick="window.location.href='johnny.html'">
+        Egg & Bacon🥓🍳
+      </button>
+    </div>
+
+  </div>
+
+  <a class="volver" href="desayuno.html">← Volver</a>
+
+</body>
+</html>

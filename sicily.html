@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sicily 🍰</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f5f0e6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    img {
+      width: 90%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    }
+
+    h1 { color: #8b5e3c; }
+
+    p {
+      max-width: 600px;
+      font-size: 22px;
+      font-family: "Times New Roman", Times, serif;
+      font-style: italic;
+      color: #4b2e1f;
+    }
+
+    /* BOTÓN VOLVER */
+    .flecha-volver {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      background-color: #ff4d6d;
+      color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    /* CANVAS ESTRELLAS */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- FLECHA VOLVER -->
+<button class="flecha-volver" onclick="window.location.href='opciones-desayuno.html'">
+  ←
+</button>
+
+<audio autoplay loop>
+  <source src="audio/naboo.mp3" type="audio/mpeg">
+</audio>
+
+<h1>Sicily 🍰🌿</h1>
+
+<img src="img/sicily_brunch.jpg">
+
+<p>
+  Como Anakin y Padmé en Naboo: 
+  una villa italiana, un desayunito y una historia de amor jedi 🌌 💫
+</p>
+
+<button onclick="window.location.href='actividades.html'" style="
+  margin-top: 30px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ff4d6d;
+  color: white;
+  cursor: pointer;
+">
+  A continuación 🎬
+</button>
+
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const stars = [];
+  const shootingStars = [];
+
+  for (let i = 0; i < 150; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 1 + Math.random() * 2.2,
+      a: 0.6 + Math.random() * 0.4,
+      pulse: Math.random() * Math.PI * 2
+    });
+  }
+
+  function createShootingStar() {
+    shootingStars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height / 2,
+      vx: 10 + Math.random() * 5,
+      vy: 6 + Math.random() * 3,
+      life: 0
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Estrellas fijas (más brillantes)
+    stars.forEach(s => {
+      s.pulse += 0.02;
+      const alpha = s.a + Math.sin(s.pulse) * 0.2;
+
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = "white";
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    ctx.shadowBlur = 0;
+
+    // Estrellas fugaces (más largas)
+    shootingStars.forEach((s, i) => {
+      ctx.strokeStyle = "rgba(255,255,255,0.9)";
+      ctx.lineWidth = 2;
+
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(s.x - s.vx * 4, s.y - s.vy * 4);
+      ctx.stroke();
+
+      s.x += s.vx;
+      s.y += s.vy;
+      s.life++;
+
+      if (s.life > 40) shootingStars.splice(i, 1);
+    });
+
+    if (Math.random() < 0.035) createShootingStar();
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>

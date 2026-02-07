@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El final 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #FAD4ED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Times New Roman", Times, serif;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #d63384;
+    opacity: 0;
+    animation: aparecer 3s ease forwards;
+    z-index: 2;
+  }
+
+  @keyframes aparecer {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="audio/pride.mp3" type="audio/mpeg">
+</audio>
+
+<h1>Espero disfrutemos el día 💓</h1>
+
+<canvas id="petalos"></canvas>
+
+<script>
+const canvas = document.getElementById("petalos");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+const petalos = [];
+const cantidad = 70;
+
+for (let i = 0; i < cantidad; i++) {
+  const depth = Math.random();
+
+  petalos.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: 10 + depth * 20,
+    speedY: 0.3 + depth * 1.2,
+    sway: Math.random() * Math.PI * 2,
+    swaySpeed: 0.01 + Math.random() * 0.02,
+    rotation: Math.random() * 360,
+    rotationSpeed: (Math.random() - 0.5) * 1,
+    depth: depth,
+    blur: depth < 0.3 ? 2 : 0
+  });
+}
+
+function drawSakuraPetal(p) {
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.rotation * Math.PI / 180);
+  ctx.filter = `blur(${p.blur}px)`;
+
+  const gradient = ctx.createRadialGradient(0, 0, 2, 0, 0, p.size);
+  gradient.addColorStop(0, "#ffffff");
+  gradient.addColorStop(0.6, "#ffc1d6");
+  gradient.addColorStop(1, "#ff9ebf");
+
+  ctx.fillStyle = gradient;
+
+  ctx.beginPath();
+  ctx.moveTo(0, -p.size);
+  ctx.bezierCurveTo(
+    p.size * 0.9, -p.size * 0.5,
+    p.size * 0.8, p.size * 0.6,
+    0, p.size
+  );
+  ctx.bezierCurveTo(
+    -p.size * 0.8, p.size * 0.6,
+    -p.size * 0.9, -p.size * 0.5,
+    0, -p.size
+  );
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawSunlight() {
+  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+
+  // Luz dorada entrando desde la izquierda
+  gradient.addColorStop(0, "rgba(255, 220, 150, 0.5)");
+  gradient.addColorStop(0.3, "rgba(255, 200, 120, 0.25)");
+  gradient.addColorStop(0.6, "rgba(255, 180, 100, 0.15)");
+  gradient.addColorStop(1, "rgba(255, 150, 80, 0.05)");
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  petalos.forEach(p => {
+    p.y += p.speedY;
+    p.sway += p.swaySpeed;
+    p.x += Math.sin(p.sway) * (1 + p.depth * 2);
+    p.rotation += p.rotationSpeed;
+
+    drawSakuraPetal(p);
+
+    if (p.y > canvas.height + 60) {
+      p.y = -60;
+      p.x = Math.random() * canvas.width;
+    }
+  });
+
+  // 🌅 Aplicar luz dorada encima
+  drawSunlight();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+
+</body>
+</html>

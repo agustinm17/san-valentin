@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ahora sí viene lo chido</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #ffd6e8, #fff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #d63384;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #444;
+      max-width: 600px;
+    }
+
+    img {
+      width: 80%;
+      max-width: 500px;
+      border-radius: 15px;
+      margin: 20px 0;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    }
+
+    .boton {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background-color: #ff4d6d;
+      color: white;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .boton:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff4d6d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🎵 Música -->
+  <audio id="bg-music" loop>
+    <source src="audio/ahora-si-viene-lo-chido.mp3" type="audio/mpeg">
+  </audio>
+
+  <h1>Ahora sí viene lo chido 😎✨</h1>
+
+  <p>
+    Después de esta invitación tan humilde 
+    llega el momento más importante del día🌟
+  </p>
+
+  <!-- GIF de Luisito -->
+  <img src="img/luisito.gif" alt="Ahora sí viene lo chido">
+
+  <p><strong>Pero primero debes elegir dónde iremos a desayunar juntos 💕</strong></p>
+
+  <button class="boton" onclick="window.location.href='opciones-desayuno.html'">
+    Ver fucking destinos deliciosos 🍳☕
+  </button>
+
+  <script>
+    const music = document.getElementById("bg-music");
+
+    // Intentar reproducir automáticamente
+    music.play().catch(() => {
+      // Si el navegador bloquea autoplay, se activará al primer clic
+      document.addEventListener("click", () => {
+        music.play();
+      }, { once: true });
+    });
+  </script>
+
+</body>
+</html>

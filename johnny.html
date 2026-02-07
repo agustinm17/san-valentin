@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Johnny Rockets 🚀</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff1c1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      font-family: 'Roboto Serif', serif;
+      padding: 20px;
+      overflow: auto;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    img {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.25);
+      z-index: 1;
+    }
+
+    h1 { color: #c1121f; z-index: 1; }
+    p { max-width: 600px; font-size: 22px; z-index: 1; }
+
+    /* BOTÓN VOLVER */
+    .flecha-volver {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      background-color: #ff4d6d;
+      color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="burgers"></canvas>
+
+  <!-- FLECHA VOLVER -->
+  <button class="flecha-volver" onclick="window.location.href='opciones-desayuno.html'">
+    ←
+  </button>
+
+  <audio autoplay loop>
+    <source src="audio/rocket.mp3" type="audio/mpeg">
+  </audio>
+
+  <h1>Johnny Rockets 🍔🚀</h1>
+
+  <img src="img/johnny_brunch.jpg">
+
+  <p>
+    Desayuno americano donde tuvimos nuestra segunda cita💥❤️
+  </p>
+
+<button onclick="window.location.href='actividades.html'" style="
+  margin-top: 30px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ff4d6d;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+">
+  A continuación 🎬
+</button>
+
+<script>
+  const canvas = document.getElementById("burgers");
+  const ctx = canvas.getContext("2d");
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const burgers = [];
+
+  for (let i = 0; i < 40; i++) {
+    burgers.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: 22 + Math.random() * 18,
+      speed: 1 + Math.random() * 2
+    });
+  }
+
+  function drawBurger(b) {
+    ctx.font = `${b.size}px serif`;
+    ctx.fillText("🍔", b.x, b.y);
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    burgers.forEach(b => {
+      drawBurger(b);
+      b.y += b.speed;
+
+      if (b.y > canvas.height + 50) {
+        b.y = -20;
+        b.x = Math.random() * canvas.width;
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>
